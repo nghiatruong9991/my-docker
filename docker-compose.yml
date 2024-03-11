@@ -1,0 +1,101 @@
+version: "3.7"
+
+services:
+    scanit:
+        image: php:7.4-scanit-dev
+        volumes:
+            - /home/user/Documents/source/campaign-scanit:/var/www/campaign-scanit
+        networks: 
+            - dev_network
+        container_name: scanit
+        ports: 
+            - 9299:9000
+        user: 1001:1001
+        working_dir: /var/www/campaign-scanit
+
+    campaign-cms:
+        image: php7.4-campaign-cms.dev
+        volumes:
+            - /home/user/Documents/source/campaign-cms:/var/www/campaign-cms
+        networks: 
+            - dev_network
+        container_name: campaign-cms
+        ports: 
+            - 9300:9000
+        user: 1001:1001
+        working_dir: /var/www/campaign-cms
+
+
+    sp-admin:
+        image: php:8.1-dev
+        volumes: 
+            - /home/user/Documents/source/sp-admin:/var/www/sp-admin
+        networks: 
+            - dev_network
+        container_name: sp-admin
+        ports: 
+            - 9301:9000
+        user: 1001:1001
+        working_dir: /var/www/sp-admin
+
+    luckydraw:
+        image: php:8.1-dev
+        volumes: 
+            - /home/user/Documents/source/campaign-luckydraw:/var/www/campaign-luckydraw
+        networks: 
+            - dev_network
+        container_name: luckydraw
+        ports: 
+            - 9302:9000
+        user: 1001:1001
+        working_dir: /var/www/campaign-luckydraw
+
+    memcached:
+        image: memcached:latest
+        container_name: memcached
+        ports:
+            - 11211:11211
+        networks: 
+            - dev_network
+
+    redis:
+        image: redis:latest
+        container_name: redis
+        ports:
+            - 6379:6379
+        networks: 
+            - dev_network
+
+    db:
+        image: mariadb
+        container_name: db
+        ports:
+            - 3306:3306
+        environment:
+            MARIADB_ROOT_PASSWORD: example
+            MARIADB_USER: user
+            MARIADB_PASSWORD: user
+            TZ: Asia/Ho_Chi_Minh
+        volumes:
+            - /home/user/Documents/data/.mariadbdata:/var/lib/mysql
+            - /home/user/Documents/data/.mariadbdata_conf:/etc/mysql/conf.d
+        networks: 
+            - dev_network
+        # command: --bind-address=0.0.0.0
+
+    nginx:
+        image: nginx:latest
+        container_name: nginx
+        volumes: 
+            - /home/user/Documents/source:/var/www
+            - /home/user/Documents/source/docker/nginx/vhosts/:/etc/nginx/conf.d/
+
+        networks: 
+            - dev_network
+        ports: 
+            - 80:8080
+            - 443:8443
+
+networks: 
+    dev_network:
+        driver: bridge
