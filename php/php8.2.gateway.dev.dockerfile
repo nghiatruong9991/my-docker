@@ -10,7 +10,6 @@ EXPOSE 9000
 RUN apk add --update --no-cache gcc make g++ zlib-dev autoconf nano libzip-dev zip libpng libpng-dev shadow bash git openssh oniguruma php-sockets openssl
 
 RUN docker-php-ext-install pdo_mysql exif zip gd opcache
-RUN docker-php-ext-install sockets
 # RUN docker-php-ext-install sodium
 
 # Install composer
@@ -18,13 +17,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install redis a
 RUN pear update-channels && pecl update-channels && pecl install redis
-RUN docker-php-ext-enable redis pdo_mysql exif zip gd opcache sockets
+RUN docker-php-ext-enable redis pdo_mysql exif zip gd opcache
 
 RUN pecl install ds &&\
     docker-php-ext-enable ds
 
 # Modify uid and groupd id of www-data to 1000
-RUN usermod -u 1000 www-data &&\
-    groupmod -g 1000 www-data
+RUN usermod -u 1001 www-data &&\
+    groupmod -g 1001 www-data
 
 USER www-data

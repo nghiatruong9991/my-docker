@@ -50,6 +50,18 @@ services:
         user: 1001:1001
         working_dir: /var/www/campaign-luckydraw
 
+    campaign-gateway:
+        image: php8.2.gateway.dev
+        volumes: 
+            - /home/user/Documents/source/campaign-gateway:/var/www/campaign-gateway
+        networks: 
+            - dev_network
+        container_name: campaign-gateway
+        ports: 
+            - 9303:9000
+        user: 1001:1001
+        working_dir: /var/www/campaign-gateway
+
     memcached:
         image: memcached:latest
         container_name: memcached
@@ -88,6 +100,12 @@ services:
         container_name: nginx
         volumes: 
             - /home/user/Documents/source:/var/www
+            - /home/user/Documents/source/docker/nginx/ssl.pem:/etc/ssl/certs/ssl.pem
+            - /home/user/Documents/source/docker/nginx/ssl_key.pem:/etc/ssl/private/ssl_key.pem
+
+            - /home/user/Documents/source/docker/nginx/campaign-cms.crt:/etc/ssl/certs/campaign-cms.crt
+            - /home/user/Documents/source/docker/nginx/campaign-cms.key:/etc/ssl/private/campaign-cms.key
+
             - /home/user/Documents/source/docker/nginx/vhosts/:/etc/nginx/conf.d/
 
         networks: 
