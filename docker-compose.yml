@@ -62,6 +62,18 @@ services:
         user: 1001:1001
         working_dir: /var/www/campaign-gateway
 
+    restaurant:
+        image: php:8.1-dev
+        volumes: 
+            - /home/user/Documents/source/restaurant-software:/var/www/restaurant-software
+        networks: 
+            - dev_network
+        container_name: restaurant
+        ports: 
+            - 9304:9000
+        user: 1001:1001
+        working_dir: /var/www/restaurant-software
+
     memcached:
         image: memcached:latest
         container_name: memcached
