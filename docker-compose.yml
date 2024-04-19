@@ -62,13 +62,13 @@ services:
         user: 1001:1001
         working_dir: /var/www/campaign-gateway
 
-    restaurant:
+    vitan:
         image: php:8.1-dev
         volumes: 
             - /home/user/Documents/source/restaurant-software:/var/www/restaurant-software
         networks: 
             - dev_network
-        container_name: restaurant
+        container_name: vitan
         ports: 
             - 9304:9000
         user: 1001:1001
