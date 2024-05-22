@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     scanit:
-        image: php:7.4-scanit-dev
+        image: php:7.3.dev
         volumes:
             - /home/user/Documents/source/campaign-scanit:/var/www/campaign-scanit
         networks: 
@@ -14,7 +14,7 @@ services:
         working_dir: /var/www/campaign-scanit
 
     campaign-cms:
-        image: php7.4-campaign-cms.dev
+        image: php:7.3.dev
         volumes:
             - /home/user/Documents/source/campaign-cms:/var/www/campaign-cms
         networks: 
@@ -73,6 +73,18 @@ services:
             - 9304:9000
         user: 1001:1001
         working_dir: /var/www/restaurant-software
+    
+    ai-service-api:
+        image: php:8.1-dev
+        volumes: 
+            - /home/user/Documents/source/ai-service-api:/var/www/ai-service-api
+        networks: 
+            - dev_network
+        container_name: ai-service-api
+        ports: 
+            - 9305:9000
+        user: 1001:1001
+        working_dir: /var/www/ai-service-api
 
     memcached:
         image: memcached:latest
