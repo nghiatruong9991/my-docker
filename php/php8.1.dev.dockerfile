@@ -7,26 +7,30 @@ WORKDIR /var/www
 EXPOSE 9000
 
 # Install php packages
-RUN apk add --update --no-cache gcc make g++ zlib-dev autoconf nano libzip-dev zip libpng libpng-dev shadow bash git openssh oniguruma php-sockets openssl
+RUN apk add --update --no-cache gcc make g++ zlib-dev autoconf nano libzip-dev zip libpng libpng-dev \
+    shadow bash git openssh oniguruma php-sockets openssl libc-dev
 
-RUN docker-php-ext-install pdo_mysql exif zip gd 
-# opcache
+RUN docker-php-ext-install pdo_mysql exif zip gd opcache
+RUN docker-php-ext-install sockets
+# RUN docker-php-ext-install sodium
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# install latest Node.js and npm
-# RUN apk add nodejs npm
-
 # Install redis a
-# RUN pear update-channels && pecl update-channels && pecl install redis
-# RUN docker-php-ext-enable redis exif gd opcache sodium zip
+RUN pear update-channels && pecl update-channels && pecl install redis
+RUN docker-php-ext-enable redis pdo_mysql exif zip gd opcache sockets
+
+RUN pecl install ds &&\
+    docker-php-ext-enable ds
+
+# Install grpc extension
+RUN apk add --update --no-cache build-base autoconf libtool zlib-dev libc-dev
+RUN pecl install grpc && \
+    docker-php-ext-enable grpc
 
 # Modify uid and groupd id of www-data to 1000
 RUN usermod -u 1001 www-data &&\
     groupmod -g 1001 www-data
-
-# CMD cd ./public/nextjs-blog
-# ENTRYPOINT "npm run dev"
 
 USER www-data
