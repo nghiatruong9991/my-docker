@@ -7,10 +7,10 @@ WORKDIR /var/www
 EXPOSE 9000
 
 # Install php packages
-RUN apk add --update --no-cache gcc make g++ zlib-dev autoconf nano libzip-dev zip libpng libpng-dev shadow bash git openssh oniguruma php-sockets openssl
+RUN apk add --update --no-cache gcc make g++ zlib-dev autoconf nano libzip-dev zip libpng \
+    libpng-dev shadow bash git openssh oniguruma php-sockets openssl
 
-RUN docker-php-ext-install pdo_mysql exif zip gd opcache
-# RUN docker-php-ext-install sodium
+RUN docker-php-ext-install pdo_mysql exif zip gd opcache bcmath
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

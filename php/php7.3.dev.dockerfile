@@ -9,7 +9,7 @@ EXPOSE 9000
 # Install php packages
 RUN apk add --update --no-cache \
     gcc make g++ zlib-dev autoconf nano libsodium-dev libzip-dev zip libpng libpng-dev shadow bash git openssh &&\
-    docker-php-ext-install pdo_mysql exif zip gd opcache mbstring sockets
+    docker-php-ext-install pdo_mysql exif zip gd opcache mbstring sockets bcmath
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.21
