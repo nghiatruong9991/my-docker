@@ -4,7 +4,7 @@ services:
     scanit:
         image: php:7.4-scanit-dev
         volumes:
-            - /home/user/Documents/source/campaign-scanit:/var/www/campaign-scanit
+            - /Users/apple/Documents/source/campaign-scanit:/var/www/campaign-scanit
         networks: 
             - dev_network
         container_name: scanit
@@ -16,7 +16,7 @@ services:
     campaign-cms:
         image: php7.4-campaign-cms.dev
         volumes:
-            - /home/user/Documents/source/campaign-cms:/var/www/campaign-cms
+            - /Users/apple/Documents/source/campaign-cms:/var/www/campaign-cms
         networks: 
             - dev_network
         container_name: campaign-cms
@@ -29,7 +29,7 @@ services:
     sp-admin:
         image: php:8.1-dev
         volumes: 
-            - /home/user/Documents/source/sp-admin:/var/www/sp-admin
+            - /Users/apple/Documents/source/sp-admin:/var/www/sp-admin
         networks: 
             - dev_network
         container_name: sp-admin
@@ -41,7 +41,7 @@ services:
     luckydraw:
         image: php:8.1-dev
         volumes: 
-            - /home/user/Documents/source/campaign-luckydraw:/var/www/campaign-luckydraw
+            - /Users/apple/Documents/source/campaign-luckydraw:/var/www/campaign-luckydraw
         networks: 
             - dev_network
         container_name: luckydraw
@@ -49,6 +49,18 @@ services:
             - 9302:9000
         user: 1001:1001
         working_dir: /var/www/campaign-luckydraw
+
+    fis:
+        image: php:7.4-dev
+        volumes: 
+            - /Users/apple/Documents/source/fis:/var/www/fis
+        networks: 
+            - dev_network
+        container_name: fis
+        ports: 
+            - 9303:9000
+        user: 1001:1001
+        working_dir: /var/www/fis
 
     memcached:
         image: memcached:latest
@@ -70,15 +82,16 @@ services:
         image: mariadb
         container_name: db
         ports:
-            - 3306:3306
+            - 8083:3306
         environment:
             MARIADB_ROOT_PASSWORD: example
             MARIADB_USER: user
             MARIADB_PASSWORD: user
+            MYSQL_ROOT_PASSWORD: example
             TZ: Asia/Ho_Chi_Minh
         volumes:
-            - /home/user/Documents/data/.mariadbdata:/var/lib/mysql
-            - /home/user/Documents/data/.mariadbdata_conf:/etc/mysql/conf.d
+            - /Users/apple/Documents/data/.mariadbdata:/var/lib/mysql
+            - /Users/apple/Documents/data/.mariadbdata_conf:/etc/mysql/conf.d
         networks: 
             - dev_network
         # command: --bind-address=0.0.0.0
@@ -87,8 +100,8 @@ services:
         image: nginx:latest
         container_name: nginx
         volumes: 
-            - /home/user/Documents/source:/var/www
-            - /home/user/Documents/source/docker/nginx/vhosts/:/etc/nginx/conf.d/
+            - /Users/apple/Documents/source:/var/www
+            - /Users/apple/Documents/source/my-docker/nginx/vhosts/:/etc/nginx/conf.d/
 
         networks: 
             - dev_network
