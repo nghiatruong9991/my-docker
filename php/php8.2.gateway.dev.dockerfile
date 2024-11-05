@@ -8,7 +8,7 @@ EXPOSE 9000
 
 # Install php packages
 RUN apk add --update --no-cache gcc make g++ zlib-dev autoconf nano libzip-dev zip libpng \
-    libpng-dev shadow bash git openssh oniguruma php-sockets openssl
+    libpng-dev shadow bash git openssh oniguruma openssl
 
 RUN docker-php-ext-install pdo_mysql exif zip gd opcache bcmath
 

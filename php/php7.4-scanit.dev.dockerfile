@@ -20,18 +20,6 @@ RUN pecl install redis &&\
     pecl install ds &&\
     docker-php-ext-enable ds
 
-# # Install xdebug
-# RUN pecl install xdebug-2.9.2 \
-#     # && docker-php-ext-enable xdebug \
-#     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-#     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-#     && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-#     && echo "xdebug.remote_port=9003" >> /usr/local/etc/php/conf.d/xdebug.ini \
-#     && echo "xdebug.remote_host=localhost" >> /usr/local/etc/php/conf.d/xdebug.ini
-
-# install latest Node.js and npm
-# RUN apk add nodejs npm
-
 # Modify uid and groupd id of www-data to 1000
 RUN usermod -u 1001 www-data &&\
     groupmod -g 1001 www-data

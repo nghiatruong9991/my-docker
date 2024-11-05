@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     scanit:
-        image: php:7.3.dev
+        image: php:7.4-scanit-dev
         volumes:
             - /home/user/Documents/source/campaign-scanit:/var/www/campaign-scanit
         networks: 
@@ -14,7 +14,7 @@ services:
         working_dir: /var/www/campaign-scanit
 
     campaign-cms:
-        image: php:7.3.dev
+        image: php:7.4-scanit-dev
         volumes:
             - /home/user/Documents/source/campaign-cms:/var/www/campaign-cms
         networks: 
@@ -85,6 +85,53 @@ services:
             - 9305:9000
         user: 1001:1001
         working_dir: /var/www/ai-service-api
+
+    fis:
+        image: php7.4.fis
+        volumes: 
+            - /home/user/Documents/source/fis:/var/www/fis
+        networks: 
+            - dev_network
+        container_name: fis
+        ports: 
+            - 9306:9000
+        user: 1001:1001
+        working_dir: /var/www/fis
+
+    campaign-tool:
+        image: php8.2.gateway.dev
+        volumes: 
+            - /home/user/Documents/source/campaign-tool:/var/www/campaign-tool
+        networks: 
+            - dev_network
+        container_name: campaign-tool
+        ports: 
+            - 9307:9000
+        user: 1001:1001
+        working_dir: /var/www/campaign-tool
+
+    pg_phatqua:
+        image: php:7.4-scanit-dev
+        volumes: 
+            - /home/user/Documents/source/pg_phatqua:/var/www/pg_phatqua
+        networks: 
+            - dev_network
+        container_name: pg_phatqua
+        ports: 
+            - 9308:9000
+        user: 1001:1001
+        working_dir: /var/www/pg_phatqua
+    campaign-sample:
+            image: php:7.4-scanit-dev
+            volumes: 
+                - /home/user/Documents/source/campaign-sample:/var/www/campaign-sample
+            networks: 
+                - dev_network
+            container_name: campaign-sample
+            ports: 
+                - 9309:9000
+            user: 1001:1001
+            working_dir: /var/www/campaign-sample
 
     memcached:
         image: memcached:latest
