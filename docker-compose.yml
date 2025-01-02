@@ -133,6 +133,19 @@ services:
             user: 1001:1001
             working_dir: /var/www/campaign-sample
 
+    cc-admin:
+        image: php:8.1-dev
+        volumes:
+            - /home/user/Documents/source/cc-admin:/var/www/cc-admin
+            - /home/user/Documents/source/docker/php/php8.dev.ini:/usr/local/etc/php/php.ini
+        networks:
+            - dev_network
+        container_name: cc-admin
+        ports:
+            - "9310:9000"
+        user: 1001:1001
+        working_dir: /var/www/cc-admin
+
     memcached:
         image: memcached:latest
         container_name: memcached
